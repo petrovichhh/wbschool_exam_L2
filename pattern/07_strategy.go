@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 	Реализовать паттерн «стратегия».
 Объяснить применимость паттерна, его плюсы и минусы, а также реальные примеры использования данного примера на практике.
@@ -10,17 +12,44 @@ type WeaponBehavior interface {
 	useWeapon()
 }
 
-type SwordBehavior struct {
-	damage int
+type Warrior struct {
+	WeaponBehavior
 }
 
-func (s SwordBehavior) useWeapon() {
-	//TODO implement me
-	panic("implement me")
+// сюда приходит структура оружия которую мы присваиваем в интерфейс нашего воина
+func (k *Warrior) setWeapon(w WeaponBehavior) {
+	k.WeaponBehavior = w
+}
+
+// поведение меча
+type SwordBehavior struct {
+}
+
+func (s *SwordBehavior) useWeapon() {
+	fmt.Println("я бью мечом на", 100)
+}
+
+// Поведение ножа
+type KnifeBehavior struct {
+}
+
+func (k *KnifeBehavior) useWeapon() {
+	fmt.Println("я бью ножом на", 30)
 }
 
 func main() {
+	samurai := &Warrior{}
+	// создаю массив с оружием
+	// теперь если мне нужно будет добавить оружие я смогу создать сколько угодно оружия и менять его у нашего воина когда захочу
+	weapons := []WeaponBehavior{
+		&SwordBehavior{},
+		&KnifeBehavior{},
+	}
 
+	for _, strategy := range weapons {
+		samurai.setWeapon(strategy)
+		samurai.useWeapon()
+	}
 }
 
 /*Паттерн стратегия определяет сеймейство алгоритмов инкапсулирует и обеспечивает их взаимозаменяемость. Паттерн
@@ -38,3 +67,7 @@ func main() {
 Усложняет программу за счёт дополнительных классов.
 Происходит усложнение кодовой базы за счет получения дополнительной гибкости в проекте
 Поэтому нужно использовать паттерны там где они Необходимы*/
+
+// паттерн стратегия предлагает определить похожие алгоритмы которые часто изменяются или расширяются и вынести их
+// в собственный объект
+// если много операторов if else либо switch case можно применить данный паттерн
