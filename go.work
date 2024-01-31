@@ -2,4 +2,5 @@ go 1.18
 
 use (
     ./develop/dev01
+    ./develop/dev02
 )
