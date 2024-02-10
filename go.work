@@ -6,4 +6,5 @@ use (
     ./develop/dev03
     ./develop/dev04
     ./develop/dev05
+    ./develop/dev06
 )
