@@ -1,5 +1,14 @@
 package main
 
+import (
+	"flag"
+	"io"
+	"log"
+	"net"
+	"os"
+	"time"
+)
+
 /*
 === Утилита telnet ===
 
@@ -16,5 +25,34 @@ go-telnet --timeout=10s host port go-telnet mysite.ru 8080 go-telnet --timeout=3
 */
 
 func main() {
+	timeout := flag.Duration("timeout", 10*time.Second, "timeout")
+	flag.Parse()
+	args := flag.Args()
 
+	if len(args) != 2 {
+		log.Fatalf("Usage: go-telnet [--timeout] host port")
+	}
+
+	host := args[0]
+	port := args[1]
+
+	dialer := &net.Dialer{
+		Timeout: *timeout,
+	}
+
+	conn, err := dialer.Dial("tcp", net.JoinHostPort(host, port))
+	if err != nil {
+		log.Fatalf("Cannot connect: %v", err)
+	}
+	defer conn.Close()
+
+	go func() {
+		if _, err := io.Copy(conn, os.Stdin); err != nil {
+			log.Fatalf("Error occurred while sending data: %v", err)
+		}
+	}()
+
+	if _, err := io.Copy(os.Stdout, conn); err != nil {
+		log.Fatalf("Error occurred while receiving data: %v", err)
+	}
 }
