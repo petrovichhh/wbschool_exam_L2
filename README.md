@@ -1,12 +1,22 @@
-# WB Tech: level # 2 (Golang)
-## Как делать задания:
-Никаких устных решений — только код. Одно решение — один файл с хорошо откомментированным кодом. Каждое решение или невозможность решения надо объяснить.
+<h1 align="center">WB Tech Level 2</h1>
 
-Разрешается и приветствуется использование любых справочных ресурсов, привлечение сторонних экспертов и т.д. и т.п.
+<p align="center">
+  <a href="https://golang.org/"><img alt="Golang" src="https://badgen.net/badge/language/Golang/blue"></a>
+</p>
 
+This repository contains solutions for Level 2 WB Tech assignments, implemented in the Golang programming language.
 
-Основной критерий оценки — четкое понимание «как это работает». Некоторые задачи можно решить несколькими способами, в этом случае требуется привести максимально возможное количество вариантов и обосновать наиболее оптимальный из них, если таковой имеется.
+## Assignments
 
-Можно задавать вопросы, как по условию задач, так и об их решении.
+The assignments include the implementation of various design patterns and the development of various programs. Each program must pass all tests, and the code must pass `go vet` and `golint` checks.
 
-Для задач на разработку (/develop) все тест-кейсы должны быть оформлены в виде отдельных тестов.
+## Running Tests
+
+To run the tests for any task, navigate to the corresponding task folder within the `src` directory and use the `go test` command. For example:
+
+```bash
+cd develop/<task folder name>
+go test
+```
+
+Replace `<task folder name>` with the name of the task folder for which you want to run the tests. This command will run all tests in the specified folder.
